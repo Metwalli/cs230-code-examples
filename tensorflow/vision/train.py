@@ -4,7 +4,7 @@ import argparse
 import logging
 import os
 import random
-
+from imutils import paths
 import tensorflow as tf
 
 from model.input_fn import input_fn
@@ -23,6 +23,15 @@ parser.add_argument('--data_dir', default='data/64x64_SIGNS',
 parser.add_argument('--restore_from', default=None,
                     help="Optional, directory or file containing weights to reload before training")
 
+def get_labels(imagePaths, classes):
+    labels = []
+    class_to_ix = dict(zip(classes, range(len(classes))))
+    ix_to_class = dict(zip(range(len(classes)), classes))
+    class_to_ix = {v: k for k, v in ix_to_class.items()}
+    for p in imagePaths:
+        labels.append(class_to_ix[p.split(os.path.sep)[-2]])
+
+    return labels
 
 if __name__ == '__main__':
     # Set the random seed for the whole graph for reproductible experiments
@@ -50,14 +59,29 @@ if __name__ == '__main__':
     dev_data_dir = os.path.join(data_dir, "dev_signs")
 
     # Get the filenames from the train and dev sets
-    train_filenames = [os.path.join(train_data_dir, f) for f in os.listdir(train_data_dir)
-                       if f.endswith('.jpg')]
-    eval_filenames = [os.path.join(dev_data_dir, f) for f in os.listdir(dev_data_dir)
-                      if f.endswith('.jpg')]
+    # train_filenames = [os.path.join(train_data_dir, f) for f in os.listdir(train_data_dir)
+    #                    if f.endswith('.jpg')]
+    # eval_filenames = [os.path.join(dev_data_dir, f) for f in os.listdir(dev_data_dir)
+    #                   if f.endswith('.jpg')]
+    #
+    # # Labels will be between 0 and 5 included (6 classes in total)
+    # train_labels = [int(f.split(os.path.sep)[-1][0]) for f in train_filenames]
+    # eval_labels = [int(f.split(os.path.sep)[-1][0]) for f in eval_filenames]
 
-    # Labels will be between 0 and 5 included (6 classes in total)
-    train_labels = [int(f.split('/')[-1][0]) for f in train_filenames]
-    eval_labels = [int(f.split('/')[-1][0]) for f in eval_filenames]
+    # Get the filenames from the train and dev sets
+    image_paths = sorted(list(paths.list_images(data_dir)))
+    random.seed(230)
+    random.shuffle(image_paths)
+
+    split = int(0.8 * len(image_paths))
+    train_filenames = image_paths[:split]
+    eval_filenames = image_paths[split:]
+
+    classes_list = os.listdir(data_dir)
+    train_labels = get_labels(train_filenames, classes_list)
+    eval_labels = get_labels(eval_filenames, classes_list)
+
+    print(len(train_labels), len(train_filenames))
 
     # Specify the sizes of the dataset we train on and evaluate on
     params.train_size = len(train_filenames)

@@ -33,9 +33,10 @@ def build_model(is_training, inputs, params):
             out = tf.nn.relu(out)
             out = tf.layers.max_pooling2d(out, 2, 2)
 
-    assert out.get_shape().as_list() == [None, 4, 4, num_channels * 8]
+    print(out.shape)
+    assert out.get_shape().as_list() == [None, 14, 14, num_channels * 8]
 
-    out = tf.reshape(out, [-1, 4 * 4 * num_channels * 8])
+    out = tf.reshape(out, [-1, 14 * 14 * num_channels * 8])
     with tf.variable_scope('fc_1'):
         out = tf.layers.dense(out, num_channels * 8)
         if params.use_batch_norm:

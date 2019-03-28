@@ -72,7 +72,7 @@ if __name__ == '__main__':
     train_filenames = sorted(list(paths.list_images(os.path.join(data_dir, "train"))))
     eval_filenames = sorted(list(paths.list_images(os.path.join(data_dir, "test"))))
 
-    classes_list = os.listdir(os.path.join(data_dir), "train")
+    classes_list = os.listdir(os.path.join(data_dir, "train"))
     train_labels = get_labels(train_filenames, classes_list)
     eval_labels = get_labels(eval_filenames, classes_list)
 

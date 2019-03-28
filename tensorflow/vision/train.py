@@ -69,19 +69,12 @@ if __name__ == '__main__':
     # eval_labels = [int(f.split(os.path.sep)[-1][0]) for f in eval_filenames]
 
     # Get the filenames from the train and dev sets
-    image_paths = sorted(list(paths.list_images(data_dir)))
-    random.seed(230)
-    random.shuffle(image_paths)
+    train_filenames = sorted(list(paths.list_images(os.path.join(data_dir), "train")))
+    eval_filenames = sorted(list(paths.list_images(os.path.join(data_dir), "test")))
 
-    split = int(0.8 * len(image_paths))
-    train_filenames = image_paths[:split]
-    eval_filenames = image_paths[split:]
-
-    classes_list = os.listdir(data_dir)
+    classes_list = os.listdir(os.path.join(data_dir), "train")
     train_labels = get_labels(train_filenames, classes_list)
     eval_labels = get_labels(eval_filenames, classes_list)
-
-    print(len(train_labels), len(train_filenames))
 
     # Specify the sizes of the dataset we train on and evaluate on
     params.train_size = len(train_filenames)

@@ -69,8 +69,8 @@ if __name__ == '__main__':
     # eval_labels = [int(f.split(os.path.sep)[-1][0]) for f in eval_filenames]
 
     # Get the filenames from the train and dev sets
-    train_filenames = sorted(list(paths.list_images(os.path.join(data_dir), "train")))
-    eval_filenames = sorted(list(paths.list_images(os.path.join(data_dir), "test")))
+    train_filenames = sorted(list(paths.list_images(os.path.join(data_dir, "train"))))
+    eval_filenames = sorted(list(paths.list_images(os.path.join(data_dir, "test"))))
 
     classes_list = os.listdir(os.path.join(data_dir), "train")
     train_labels = get_labels(train_filenames, classes_list)

@@ -2,7 +2,7 @@
 
 import tensorflow as tf
 from .densenet_model import DenseNet
-
+from .smallervggnet import SmallerVGGNet
 def build_model(is_training, inputs, params):
     """Compute logits of the model (output distribution)
 
@@ -69,7 +69,8 @@ def model_fn(mode, inputs, params, reuse=False):
     with tf.variable_scope('model', reuse=reuse):
         # Compute the output distribution of the model and the predictions
         # logits = build_model(is_training, inputs, params)
-        logits = DenseNet(x=inputs, params=params, reuse=reuse, is_training=is_training).model
+        logits = SmallerVGGNet.build(is_training, inputs, params)
+        # logits = DenseNet(x=inputs, params=params, reuse=reuse, is_training=is_training).model
         predictions = tf.argmax(logits, 1)
 
     # Define loss and accuracy
@@ -78,7 +79,7 @@ def model_fn(mode, inputs, params, reuse=False):
 
     # Define training step that minimizes the loss with the Adam optimizer
     if is_training:
-        optimizer = tf.train.AdamOptimizer(params.learning_rate)
+        optimizer = tf.train.AdamOptimizer(learning_rate=params.learning_rate, epsilon=1.1e-5)
         global_step = tf.train.get_or_create_global_step()
         if params.use_batch_norm:
             # Add a dependency to update the moving mean and variance for batch normalization

@@ -41,7 +41,7 @@ class DenseNet():
 
     def transition_layer(self, x, scope):
         with tf.name_scope(scope):
-            x = tf.layers.batch_normalization(x, momentum=self.params.bn_momentum, training=self.is_training)
+            x = tf.layers.batch_normalization(x, epsilon=self.params.eps, momentum=self.params.bn_momentum, training=self.is_training)
             x = tf.nn.relu(x)
             num_output_channels = int(self.num_filters * self.params.compression_rate)
             x = conv_layer(x, num_output_channels, kernel=[1,1], layer_name=scope+'_conv1')
@@ -58,7 +58,7 @@ class DenseNet():
             # x = conv_layer(x, filter=num_channels, kernel=[1, 1], layer_name=scope + '_conv1')
             # if self.params.dropout_rate > 0:
             #     x = tf.layers.dropout(x, rate=self.params.dropout_rate, training=self.is_training)
-            x = tf.layers.batch_normalization(x, momentum=self.params.bn_momentum, training=self.is_training)
+            x = tf.layers.batch_normalization(x, epsilon=self.params.eps, momentum=self.params.bn_momentum, training=self.is_training)
             x = tf.nn.relu(x)
             x = conv_layer(x, filter=no_filters, kernel=[3, 3], layer_name=scope + '_conv2')
             if self.params.dropout_rate > 0:
@@ -83,7 +83,7 @@ class DenseNet():
         out = images
         with tf.variable_scope('DenseNet-v', reuse=self.reuse):
             out = conv_layer(out, filter=self.num_filters, kernel=[7,7], stride=2, layer_name='conv0')
-            out = tf.layers.batch_normalization(out, momentum=self.params.bn_momentum, training=self.is_training)
+            out = tf.layers.batch_normalization(out, epsilon=self.params.eps, momentum=self.params.bn_momentum, training=self.is_training)
             out = tf.nn.relu(out)
             out = Max_Pooling(out, pool_size=[3,3], stride=2)
             # define list contain the number layers in blocks the length of list based on the number blocks in the model
@@ -101,7 +101,7 @@ class DenseNet():
             self.num_filters = int(self.num_filters * self.params.compression_rate)
 
             out = self.dense_block(input_x=out, nb_layers=self.params.num_layers_per_block[3], layer_name='dense_4')
-            out = tf.layers.batch_normalization(out, momentum=self.params.bn_momentum, training=self.is_training)
+            out = tf.layers.batch_normalization(out, epsilon=self.params.eps, momentum=self.params.bn_momentum, training=self.is_training)
             out = tf.nn.relu(out)
             out = Global_Average_Pooling(out)
 

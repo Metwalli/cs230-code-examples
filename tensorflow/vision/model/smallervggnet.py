@@ -19,7 +19,7 @@ class SmallerVGGNet:
 		out = tf.layers.conv2d(out, 32, 3, padding='same')
 		out = tf.nn.relu(out)
 		out = tf.layers.batch_normalization(out, momentum=bn_momentum, training=is_training)
-		out = tf.layers.max_pooling2d(out, 3)
+		out = tf.layers.max_pooling2d(out, 3, 1)
 		out = tf.layers.dropout(out, 0.25)
 
 		# (CONV => RELU) * 2 => POOL
@@ -29,7 +29,7 @@ class SmallerVGGNet:
 		out = tf.layers.conv2d(out, 64, 3, padding='same')
 		out = tf.nn.relu(out)
 		out = tf.layers.batch_normalization(out, momentum=bn_momentum, training=is_training)
-		out = tf.layers.max_pooling2d(out, 2)
+		out = tf.layers.max_pooling2d(out, 2, 1)
 		out = tf.layers.dropout(out, 0.25)
 
 		# (CONV => RELU) * 2 => POOL
@@ -39,7 +39,7 @@ class SmallerVGGNet:
 		out = tf.layers.conv2d(out, 128, 3, padding='same')
 		out = tf.nn.relu(out)
 		out = tf.layers.batch_normalization(out, momentum=bn_momentum, training=is_training)
-		out = tf.layers.max_pooling2d(out, 2)
+		out = tf.layers.max_pooling2d(out, 2, 1)
 		out = tf.layers.dropout(out, 0.25)
 
 		# first (and only) set of FC => RELU layers

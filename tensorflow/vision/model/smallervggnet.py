@@ -2,7 +2,7 @@
 
 import tensorflow as tf
 class SmallerVGGNet:
-	@staticmethod
+
 	def build(is_training, inputs, params):
 		# initialize the model along with the input shape to be
 		# "channels last" and the channels dimension itself

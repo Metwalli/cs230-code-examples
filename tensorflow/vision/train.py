@@ -55,18 +55,6 @@ if __name__ == '__main__':
     # Create the input data pipeline
     logging.info("Creating the datasets...")
     data_dir = args.data_dir
-    train_data_dir = os.path.join(data_dir, "train_signs")
-    dev_data_dir = os.path.join(data_dir, "dev_signs")
-
-    # Get the filenames from the train and dev sets
-    # train_filenames = [os.path.join(train_data_dir, f) for f in os.listdir(train_data_dir)
-    #                    if f.endswith('.jpg')]
-    # eval_filenames = [os.path.join(dev_data_dir, f) for f in os.listdir(dev_data_dir)
-    #                   if f.endswith('.jpg')]
-    #
-    # # Labels will be between 0 and 5 included (6 classes in total)
-    # train_labels = [int(f.split(os.path.sep)[-1][0]) for f in train_filenames]
-    # eval_labels = [int(f.split(os.path.sep)[-1][0]) for f in eval_filenames]
 
     # Get the filenames from the train and dev sets
     train_filenames = sorted(list(paths.list_images(os.path.join(data_dir, "train"))))

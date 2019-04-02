@@ -2,6 +2,7 @@
 
 import tensorflow as tf
 from .densenet_model import DenseNet
+from .densenet_updated_model import DenseNet
 from .smallervggnet import SmallerVGGNet
 def build_model(is_training, inputs, params):
     """Compute logits of the model (output distribution)
@@ -70,6 +71,7 @@ def model_fn(mode, inputs, params, reuse=False):
         # Compute the output distribution of the model and the predictions
         # logits = build_model(is_training, inputs, params)
         # logits = SmallerVGGNet.build(is_training, inputs, params)
+        # logits = DenseNet(x=inputs, params=params, reuse=reuse, is_training=is_training).model
         logits = DenseNet(x=inputs, params=params, reuse=reuse, is_training=is_training).model
         predictions = tf.argmax(logits, 1)
 

@@ -16,9 +16,9 @@ from model.training import train_and_evaluate
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--model_dir', default='experiments/test',
+parser.add_argument('--model_dir', default='experiments/base_model',
                     help="Experiment directory containing params.json")
-parser.add_argument('--data_dir', default='data/64x64_SIGNS',
+parser.add_argument('--data_dir', default='c:\data\VIREO\\food224',
                     help="Directory containing the dataset")
 parser.add_argument('--restore_from', default=None,
                     help="Optional, directory or file containing weights to reload before training")

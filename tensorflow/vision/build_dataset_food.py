@@ -127,15 +127,6 @@ if __name__ == '__main__':
 
     classes_list = os.listdir(data_dir)
 
-    # # Define the data directories
-    # all_data_dir = os.path.join(args.data_dir, 'images')
-    # train_data_dir = os.path.join(args.data_dir, 'train')
-    # test_data_dir = os.path.join(args.data_dir, 'test')
-    #
-    # # Get the filenames in each directory (train and test)
-    #
-    # train_filenames, train_labels = get_images_data(args.data_dir, "train")
-    # eval_filenames, eval_labels = get_images_data(args.data_dir, "test")
 
     # Preprocess train, dev and test
     idx = 0

@@ -1,6 +1,7 @@
 {
     "learning_rate": 1e-3,
-    "batch_size": 32,
+    "eps": 1.1e-5,
+    "batch_size": 8,
     "num_epochs": 10,
 
     "num_channels": 64,
@@ -9,7 +10,7 @@
     "bn_momentum": 0.9,
     "dropout_rate": 0.5,
     "compression_rate": 1.0,
-    "num_layers_per_block": [6, 12, 24, 16],
+    "num_layers_per_block": [1, 1, 2, 1],
 
     "image_size": 224,
     "use_random_flip": true,
